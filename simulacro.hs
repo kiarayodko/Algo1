@@ -79,15 +79,18 @@ requiere: {relacionesV alidas(relaciones)}
 asegura: {resu es el Strings que aparece m´as veces en las tuplas de relaciones (o alguno de ellos si hay empate)}
 }
 --}
-personaConMasAmigos :: [(String, String)] -> String
+ personaConMasAmigos :: [(String, String)] -> String
 personaConMasAmigos [x]=fst x
-personaConMasAmigos (x:y:xs) = "kiara" 
+personaConMasAmigos (x:y:xs)=personaConMasAmigos1 (personas (x:y:xs)) (personasConRepes (x:y:xs))
 
 cantidadDeApariciones :: String -> [String] -> Integer
 cantidadDeApariciones _ []=0
 cantidadDeApariciones a (x:xs) | a==x =1+cantidadDeApariciones a xs
                                | otherwise = cantidadDeApariciones a xs
 
-personaConMasApariciones :: [String] -> [String] -> String --recibe personas y personasConRepes, devuelve la persona q mas aparezca en personasConRepe
-personaConMasApariciones 
+personaConMasAmigos1 :: [String] -> [String] -> String              --se fija que persona aparece mas veces en personasconrepes
+personaConMasAmigos1 [x,y] xs | cantidadDeApariciones x xs>= cantidadDeApariciones y xs =x
+                              | otherwise=y
+personaConMasAmigos1 a b | cantidadDeApariciones (head a) b>= cantidadDeApariciones (head(tail a)) b = personaConMasAmigos1 (head a:tail(tail a)) b
+                         | otherwise=personaConMasAmigos1 (tail a) b
 
